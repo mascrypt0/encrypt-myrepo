@@ -1,0 +1,27 @@
+on: ["push"]
+
+name: coveralls
+
+jobs:
+
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v1
+
+    - name: Use Node.js 16
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+
+    - name: npm install, make test-coverage
+      run: |
+        npm install
+        npm run coverage
+
+    - name: coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}
